@@ -3,7 +3,9 @@ package com.defesasoft.openai.config;
 import com.defesasoft.openai.advisor.TokenUsageAuditAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.openai.OpenAiChatOptions;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,10 +15,11 @@ import java.util.List;
 public class ChatClientConfig {
     @Bean
     public ChatClient chatClient(ChatClient.Builder chatClientBuilder) {
-        var options = OpenAiChatOptions.builder().model("gpt-5.4-mini").temperature(0.8);
-                //.maxCompletionTokens(10);
+        ChatOptions.Builder chatOptions = ChatOptions.builder().model("gpt-5.4-mini")
+                .temperature(0.8);
+
         return chatClientBuilder
-                .defaultOptions(options)
+                .defaultOptions(chatOptions)
                 .defaultAdvisors(List.of(new SimpleLoggerAdvisor(),
                         new TokenUsageAuditAdvisor()))
                 .defaultSystem("""

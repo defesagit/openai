@@ -28,6 +28,13 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+	//Implementacion de memoria jdbc
+	implementation 'org.springframework.ai:spring-ai-starter-model-chat-memory-repository-jdbc'
+	//Implementacion de h2
+	implementation 'org.springframework.boot:spring-boot-h2console'
+	implementation 'com.h2database:h2'
+
 }
 
 dependencyManagement {
