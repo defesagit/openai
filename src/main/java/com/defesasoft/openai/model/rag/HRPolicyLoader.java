@@ -1,0 +1,40 @@
+package com.defesasoft.openai.model.rag;
+
+import jakarta.annotation.PostConstruct;
+import org.springframework.ai.document.Document;
+import org.springframework.ai.reader.tika.TikaDocumentReader;
+import org.springframework.ai.transformer.splitter.TextSplitter;
+import org.springframework.ai.transformer.splitter.TokenTextSplitter;
+import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+
+@Component
+public class HRPolicyLoader {
+    private final VectorStore vectorStore;
+
+    @Value("classpath:hrPolicy.pdf")
+    Resource hrPolicyPdf;
+
+    public HRPolicyLoader(VectorStore vectorStore) {
+        this.vectorStore = vectorStore;
+    }
+
+    @PostConstruct
+    public void loadPDF(){
+        TikaDocumentReader tikaDocumentReader = new TikaDocumentReader(hrPolicyPdf);
+        List<Document> docs = tikaDocumentReader.read();
+        TextSplitter textSplitter =
+                TokenTextSplitter.builder()
+                .withChunkSize(100)
+                .withMaxNumChunks(400) // Determino cantidad de Chunks que quiero que se generen, si no pongo este parametro, se generan todos los chunks posibles
+                .build();
+        vectorStore.add(textSplitter.split(docs));
+
+    }
+
+}

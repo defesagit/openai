@@ -34,6 +34,14 @@ dependencies {
 	//Implementacion de h2
 	implementation 'org.springframework.boot:spring-boot-h2console'
 	implementation 'com.h2database:h2'
+	//Implementacion de base de datos vectorial qdrant
+	implementation 'org.springframework.boot:spring-boot-docker-compose'
+
+	implementation 'org.springframework.ai:spring-ai-rag'
+	implementation 'org.springframework.ai:spring-ai-starter-vector-store-qdrant'
+
+	//Implementacion tika ia para leer archivos pdf
+	implementation 'org.springframework.ai:spring-ai-tika-document-reader'
 
 }
 
